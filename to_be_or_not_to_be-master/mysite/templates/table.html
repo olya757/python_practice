@@ -1,0 +1,53 @@
+<!-- templates/home.html -->
+{% extends 'base.html' %}
+{% block title %}
+{% if user.is_authenticated %}
+
+  <div class="moves">{{user.username}}</div>| <div class="moves"><a href="{% url 'logout' %}">Выйти</a></div>
+{% else %}
+<div class="moves"><a href="{% url 'login'%}" >Войти</a></div>|<div class="moves">
+      <a href="{% url 'signup' %}">Регистрация</a></div>
+{%endif%}
+{% endblock %}
+
+{% block content %}
+
+    <p>Преподаватель: {{subject.curriculum.teacher}}</p>
+    <p>Предмет: {{subject.curriculum.subject}}</p>
+    <p>Группа: {{subject.group}}</p>
+      <p>Тип занятий: {{type}}</p>
+      <p>Семестр: {{subject.semester}}</p>
+{% if values%}
+    <table>
+        <thead>
+        <tr>
+        <th>Студент</th>
+            {% for d in dates%}
+        <th>{{d}}</th>
+            {% endfor %}
+
+        </tr>
+        </thead>
+
+        {% for st,vis in values %}
+       <tr>
+           <td>
+               {{st}}
+           </td>
+           {% for res in vis %}
+           <td>
+               {%if not res%}
+               -
+               {% else%}
+               +
+               {% endif%}
+           </td>
+           {%endfor%}
+       </tr>
+        {% endfor %}
+    </table>
+{%else%}
+    нет информации
+{% endif%}
+<a href="{% url 'home'%}"><button onclick="{% url 'home'%}">Назад</button></a>
+{% endblock %}

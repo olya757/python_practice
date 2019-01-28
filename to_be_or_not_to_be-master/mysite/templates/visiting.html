@@ -1,0 +1,50 @@
+<!-- templates/home.html -->
+{% extends 'base.html' %}
+
+{% block title %}
+{% if user.is_authenticated %}
+
+  <div class="moves"><a href="{% url 'logout' %}">Выйти</a></div>|<div class="moves"><a href="{% url 'home'%}">Назад</a></div>
+
+
+{% else %}
+<div class="moves"><a href="{% url 'login'%}" >Войти</a></div>|<div class="moves">
+      <a href="{% url 'signup' %}">Регистрация</a></div>
+{%endif%}{% endblock %}
+
+{% block content %}
+  <form method="post" action="{% url 'save' gc.id date %}">
+    {% csrf_token %}
+
+    <p>Дата: {{date}}</p>
+    <p>Преподаватель: {{gc.curriculum.teacher}}</p>
+    <p>Предмет: {{gc.curriculum.subject}}</p>
+    <p>Группа: {{gc.group}}</p>
+      <p>Тип занятий: {{type}}</p>
+      <p>Семестр: {{gc.semester}}</p>
+
+  {% if students %}
+    <table>
+        <thead>
+        <tr>
+        <td>Студент</td>
+        <td>Посещение</td>
+        </tr>
+        </thead>
+        {% for st in students %}
+       <tr>
+           <td>
+               {{st}}
+           </td>
+           <td >
+               <input type="checkbox" name="{{st.id}}" id="{{st.id}}" >
+           </td>
+       </tr>
+        {% endfor %}
+    </table>
+  {% else%}
+        Данных нет
+  {% endif %}
+    <button type="submit">Сохранить</button>
+</form>
+{% endblock %}

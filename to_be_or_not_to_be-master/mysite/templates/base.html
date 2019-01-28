@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+{% load staticfiles %}
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title></title>
+  <!-- fonts   -->
+
+  <link rel="stylesheet" type="text/css" href="{% static 'stylesheet.css' %}">
+</head>
+<body>
+<div class="header">
+{% block title %}  {% endblock %}
+</div>
+<div class="main">
+  {% block content %}
+  {% endblock %}
+</div>
+{% block script %}
+{% endblock %}
+</body>
+</html>
